@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "tbl_technician".
@@ -24,6 +25,8 @@ use Yii;
  */
 class TblTechnician extends \yii\db\ActiveRecord
 {
+    public $upload_foler ='uploads';
+   
     /**
      * @inheritdoc
      */
@@ -38,15 +41,46 @@ class TblTechnician extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Name', 'Address', 'Email', 'Tel', 'Img', 'Status', 'User_id'], 'required'],
+            [['Name', 'Address', 'Email', 'Tel','Status', 'User_id'], 'required'],
             [['Status', 'User_id', 'Tel'], 'integer'],
             [['Create_Date', 'Update_Date'], 'safe'],
             [['Name', 'Address', 'Img'], 'string', 'max' => 200],
             [['Email'], 'email'],
             [['Tel'], 'string', 'max' => 20],
             [['User_id'], 'exist', 'skipOnError' => true, 'targetClass' => TblAdmin::className(), 'targetAttribute' => ['User_id' => 'ID']],
+            [['Img'], 'file',
+            'skipOnEmpty' => true,
+            'extensions' => 'png,jpg'
+        ]
         ];
     }
+     public function upload($model,$attribute)
+    {
+        $photo  = UploadedFile::getInstance($model, $attribute);
+          $path = $this->getUploadPath();
+        if ($this->validate() && $photo !== null) {
+
+            $fileName = md5($photo->baseName.time()) . '.' . $photo->extension;
+            //$fileName = $photo->baseName . '.' . $photo->extension;
+            if($photo->saveAs($path.$fileName)){
+              return $fileName;
+            }
+        }
+        return $model->isNewRecord ? false : $model->getOldAttribute($attribute);
+    }
+
+    public function getUploadPath(){
+      return Yii::getAlias('@webroot').'/'.$this->upload_foler.'/';
+    }
+
+    public function getUploadUrl(){
+      return Yii::getAlias('@web').'/'.$this->upload_foler.'/';
+    }
+
+    public function getPhotoViewer(){
+      return empty($this->Img) ? Yii::getAlias('@web').'../../img/none.png' : $this->getUploadUrl().$this->Img;
+    }
+
 
     /**
      * @inheritdoc

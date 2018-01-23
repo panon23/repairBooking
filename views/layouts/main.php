@@ -38,18 +38,18 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Technicain', 'url' => ['/tbl-technician/index']],
-            ['label' => 'Comtomer', 'url' => ['/tbl-customer/index']],
-            ['label' => 'Booking', 'url' => ['/tbl-booking/index']],
-            ['label' => 'User', 'url' => ['/tbl-admin/index']],
+            ['label' => 'จัดการข้อมูลช่าง', 'url' => ['/tbl-technician/index']],
+            ['label' => 'จัดการข้อมูลลูกค้า', 'url' => ['/tbl-customer/index']],
+            ['label' => 'จัดการข้อมูลการจอง', 'url' => ['/tbl-booking/index']],
+            ['label' => 'ผู้ใช้', 'url' => ['/tbl-admin/index']],
             Yii::$app->user->isGuest ?
-            ['label' => 'Sign in', 'url' => ['/user/security/login']] :
-            ['label' => 'Account(' . Yii::$app->user->identity->username . ')', 'items'=>[
-                ['label' => 'Profile', 'url' => ['/user/settings/profile']],
-                ['label' => 'Account', 'url' => ['/user/settings/account']],
-                ['label' => 'Logout', 'url' => ['/user/security/logout'],'linkOptions' => ['data-method' => 'post']],
+            ['label' => 'ล็อกอิน', 'url' => ['/user/security/login']] :
+            ['label' => 'บัญชี(' . Yii::$app->user->identity->username . ')', 'items'=>[
+                ['label' => 'โปรไฟล์', 'url' => ['/user/settings/profile']],
+                ['label' => 'บัญชี', 'url' => ['/user/settings/account']],
+                ['label' => 'ออกจากระบบ', 'url' => ['/user/security/logout'],'linkOptions' => ['data-method' => 'post']],
             ]],
-            ['label' => 'Register', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest],
+            ['label' => 'ลงทะเบียน', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest],
         ],
     ]);
     NavBar::end();

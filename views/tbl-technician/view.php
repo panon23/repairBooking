@@ -38,6 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'Create_Date',
             'Update_Date',
             'User_id',
+            [
+            'format'=>'raw',
+            'attribute'=>'Img',
+            'value'=>Html::img($model->photoViewer,['class'=>'img-thumbnail','style'=>'width:200px;'])
+        ]
         ],
     ]) ?>
 

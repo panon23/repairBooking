@@ -72,15 +72,17 @@ class TblCustomerController extends Controller
     {
         $model = new TblCustomer();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+       if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->Img = $model->upload($model,'Img');
+            $model->save();
             return $this->redirect(['view', 'id' => $model->ID]);
-        }
+        }else{
 
         return $this->render('create', [
             'model' => $model,
         ]);
+        }
     }
-
     /**
      * Updates an existing TblCustomer model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -92,15 +94,17 @@ class TblCustomerController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->Img = $model->upload($model,'Img');
+            $model->save();
             return $this->redirect(['view', 'id' => $model->ID]);
-        }
+        }else{
 
         return $this->render('update', [
             'model' => $model,
         ]);
+        }
     }
-
     /**
      * Deletes an existing TblCustomer model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

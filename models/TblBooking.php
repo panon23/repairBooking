@@ -36,7 +36,7 @@ class TblBooking extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID', 'Cus_id', 'Technic_id', 'Date', 'Status', 'User_id'], 'required'],
+            [['Cus_id', 'Technic_id', 'Date', 'Status', 'User_id'], 'required'],
             [['ID', 'Cus_id', 'Technic_id', 'Status', 'User_id'], 'integer'],
             [['Date', 'Creare_Date', 'Update_Date'], 'safe'],
             [['ID'], 'unique'],

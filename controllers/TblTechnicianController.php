@@ -71,15 +71,17 @@ class TblTechnicianController extends Controller
     {
         $model = new TblTechnician();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->Img = $model->upload($model,'Img');
+            $model->save();
             return $this->redirect(['view', 'id' => $model->ID]);
-        }
+        }else{
 
         return $this->render('create', [
             'model' => $model,
         ]);
     }
-
+}
     /**
      * Updates an existing TblTechnician model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -91,15 +93,17 @@ class TblTechnicianController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->Img = $model->upload($model,'Img');
+            $model->save();
             return $this->redirect(['view', 'id' => $model->ID]);
-        }
+        }else{
 
         return $this->render('update', [
             'model' => $model,
         ]);
+        }
     }
-
     /**
      * Deletes an existing TblTechnician model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

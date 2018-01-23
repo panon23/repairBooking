@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "tbl_customer".
@@ -25,6 +26,8 @@ use Yii;
  */
 class TblCustomer extends \yii\db\ActiveRecord
 {
+    public $upload_foler ='uploads';
+   
     /**
      * @inheritdoc
      */
@@ -39,16 +42,45 @@ class TblCustomer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Name', 'Address', 'Email', 'Tel', 'Img', 'Status'], 'required'],
+            [['Name', 'Address', 'Email', 'Tel', 'Status'], 'required'],
             [['Status', 'Tel'], 'integer'],
             [['Create_Date', 'Update_Date'], 'safe'],
             [['Name', 'Address', 'Img'], 'string', 'max' => 200],
             [['Plat', 'Plong'], 'string', 'max' => 12],
             [['Email'], 'email'],
             [['Tel', 'FacebookLogin'], 'string', 'max' => 20],
+            [['Img'], 'file',
+            'skipOnEmpty' => true,
+            'extensions' => 'png,jpg'
+        ]
         ];
     }
+    public function upload($model,$attribute)
+    {
+        $photo  = UploadedFile::getInstance($model, $attribute);
+          $path = $this->getUploadPath();
+        if ($this->validate() && $photo !== null) {
 
+            $fileName = md5($photo->baseName.time()) . '.' . $photo->extension;
+            //$fileName = $photo->baseName . '.' . $photo->extension;
+            if($photo->saveAs($path.$fileName)){
+              return $fileName;
+            }
+        }
+        return $model->isNewRecord ? false : $model->getOldAttribute($attribute);
+    }
+
+    public function getUploadPath(){
+      return Yii::getAlias('@webroot').'/'.$this->upload_foler.'/';
+    }
+
+    public function getUploadUrl(){
+      return Yii::getAlias('@web').'/'.$this->upload_foler.'/';
+    }
+
+    public function getPhotoViewer(){
+      return empty($this->Img) ? Yii::getAlias('@web').'../../img/none.png' : $this->getUploadUrl().$this->Img;
+    }
     /**
      * @inheritdoc
      */
@@ -69,6 +101,7 @@ class TblCustomer extends \yii\db\ActiveRecord
             'Update_Date' => 'Update  Date',
         ];
     }
+
 
     /**
      * @return \yii\db\ActiveQuery
