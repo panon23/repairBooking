@@ -12,8 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tbl-customer-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->ID], [
@@ -24,28 +22,31 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'ID',
-            'Name',
-            'Address',
-            'Plat',
-            'Plong',
-            'Email:email',
-            'Tel',
-            'Img',
-            'FacebookLogin',
-            'Status',
-            'Create_Date',
-            'Update_Date',
-        [
-            'format'=>'raw',
-            'attribute'=>'Img',
-            'value'=>Html::img($model->photoViewer,['class'=>'img-thumbnail','style'=>'width:200px;'])
-        ]
-        ],
-    ]) ?>
+    <div class="box box-warning">
+        <div class="box-body">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'ID',
+                'Name',
+                'Address',
+                'Plat',
+                'Plong',
+                'Email:email',
+                'Tel',
+                'Img',
+                'FacebookLogin',
+                'Status',
+                'Create_Date',
+                'Update_Date',
+            [
+                'format'=>'raw',
+                'attribute'=>'Img',
+                'value'=>Html::img($model->photoViewer,['class'=>'img-thumbnail','style'=>'width:200px;'])
+            ]
+            ],
+        ]) ?>
+        </div>
+    </div>    
 
 </div>

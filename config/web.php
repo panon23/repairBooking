@@ -43,6 +43,13 @@ $config = [
                 ],
             ],
         ],
+        'view' => [
+             'theme' => [
+                 'pathMap' => [
+                    '@app/views' => '@app/themes/adminlte'
+                 ],
+             ],
+        ],
         'db' => $db,
         /*
         'urlManager' => [

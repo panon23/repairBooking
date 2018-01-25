@@ -12,8 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tbl-booking-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->ID], [
@@ -24,19 +22,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'ID',
-            'Cus_id',
-            'Technic_id',
-            'Date',
-            'Status',
-            'Creare_Date',
-            'Update_Date',
-            'User_id',
-        ],
-    ]) ?>
+    <div class="box box-warning">
+        <div class="box-body">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'ID',
+                'Cus_id',
+                'Technic_id',
+                'Date',
+                'Status',
+                'Creare_Date',
+                'Update_Date',
+                'User_id',
+            ],
+        ]) ?>
+        </div>
+    </div>    
 
 </div>
